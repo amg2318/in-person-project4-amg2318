@@ -143,7 +143,7 @@ navLinks.forEach(link => {
 
 // TODO: Select all skill progress bars
 // Hint: Use querySelectorAll with the class '.skill-progress'
-const skillBars = null; // Replace null with your selector
+const skillBars = document.querySelectorAll('.skill-progress');
 
 // TODO: Create a function to animate skills when they come into view
 // Hint: Add a scroll event listener
@@ -151,7 +151,24 @@ const skillBars = null; // Replace null with your selector
 //   1. For each skill bar, animate its width from 0 to the --skill-level value
 //   2. Use the style property to set the width
 //   3. Add a CSS transition for smooth animation
+function animateSkills() {
+    const skillsSection = document.querySelector('#skills');
+    const skillsPosition = skillsSection.getBoundingClientRect().top;
+    const screenPosition = window.innerHeight;
 
+    if (skillsPosition < screenPosition) {
+        skillBars.forEach(bar => {
+            const skillLevel = bar.style.getPropertyValue('--skill-level');
+            bar.style.width = skillLevel;
+        });
+    }
+}
+
+// Add scroll listener
+window.addEventListener('scroll', animateSkills);
+
+// Run once on load in case skills are already visible
+animateSkills();
 // Advanced: Use Intersection Observer for better performance (optional)
 
 
